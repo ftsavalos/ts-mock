@@ -152,7 +152,7 @@ public class EsbMockController {
     }
 
     @PostMapping("/loans/{loanAccountNumber}/permanent-delay-collection")
-    public ResponseEntity addAccountParticipant() {
+    public ResponseEntity loanPermanentDelayCollection() {
         log.info("POST to : /permanent-delay-collection");
         return this.esbMockService.getSuccessResponse();
     }
@@ -219,7 +219,7 @@ public class EsbMockController {
 
         jmsTemplate.convertAndSend(this.queue, requestBody);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(requestBody);
     }
 
     @GetMapping("/accounts/{accountNumber}/steps")
@@ -229,4 +229,33 @@ public class EsbMockController {
         return this.esbMockService.getResponseObject(data);
     }
 
+    @PostMapping("/accounts/money-transfer")
+    public ResponseEntity moneyTransferBetweenAccounts() {
+        log.info("POST to: /money-transfer");
+        return this.esbMockService.getSuccessResponse();
+    }
+
+    @GetMapping("/accounts/{accountNumber}/services")
+    public ResponseEntity getAccountServices() {
+        log.info("GET to: /services");
+        return this.esbMockService.getResponseData(GetAccountServicesResponse.class);
+    }
+
+    @PutMapping("/loans/{loanAccountNumber}/servicing-account")
+    public ResponseEntity updateLoanServicingAccount() {
+        log.info("PUT to : /servicing-account");
+        return this.esbMockService.getSuccessResponse();
+    }
+
+    @PostMapping("/accounts/{accountNumber}/participants")
+    public ResponseEntity addAccountParticipant() {
+        log.info("POST to: /participants");
+        return this.esbMockService.getSuccessResponse();
+    }
+
+    @GetMapping("/accounts/{accountNumber}/balance")
+    public ResponseEntity getAccountBalance() {
+        log.info("GET to: /balance");
+        return this.esbMockService.getResponseData(AccountBalanceResponse.class);
+    }
 }
