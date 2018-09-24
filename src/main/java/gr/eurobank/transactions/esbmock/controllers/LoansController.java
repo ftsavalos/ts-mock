@@ -1,35 +1,28 @@
 package gr.eurobank.transactions.esbmock.controllers;
 
-import gr.eurobank.transactions.esbmock.models.dto.*;
+import gr.eurobank.transactions.esbmock.models.loan.dto.*;
 import gr.eurobank.transactions.esbmock.services.EsbMockService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.jms.core.JmsTemplate;
 import org.springframework.web.bind.annotation.*;
 
-import javax.jms.Queue;
 import java.math.BigDecimal;
 
 @RestController
 @RequestMapping("/ocp-middleware/{channel}")
 @Slf4j
-public class EsbMockController {
+public class LoansController {
 
     private final EsbMockService esbMockService;
-    private final JmsTemplate jmsTemplate;
-    private final Queue queue;
 
-    public EsbMockController(EsbMockService esbMockService, JmsTemplate jmsTemplate, Queue queue) {
+    public LoansController(EsbMockService esbMockService) {
         this.esbMockService = esbMockService;
-        this.jmsTemplate = jmsTemplate;
-        this.queue = queue;
     }
 
     @PostMapping("/loans/{loanAccountNumber}/early-partial-repayment")
     public ResponseEntity getEarlyPartialRepayment() {
         log.info("POST to: /early-partial-repayment");
-        return this.esbMockService.getResponseData(EarlyPartialRepaymentResponse.class);
+        return this.esbMockService.getResponseEntityByClass(EarlyPartialRepaymentResponse.class);
     }
 
     @GetMapping("/loans/{loanAccountNumber}/fire-insurances")
@@ -39,7 +32,7 @@ public class EsbMockController {
         GetFireInsurancesResponse data = this.esbMockService.getObject(GetFireInsurancesResponse.class);
         data.getListOfFireInsurances().forEach(ins -> ins.setStatusIndicator("3"));
 
-        return this.esbMockService.getResponseObject(data);
+        return this.esbMockService.convertObjectToResponseEntity(data);
     }
 
     @PostMapping("/loans/{loanAccountNumber}/fire-insurance-collection")
@@ -51,7 +44,7 @@ public class EsbMockController {
     @GetMapping("/loans/{loanAccountNumber}/properties")
     public ResponseEntity getLoanAccountProperties() {
         log.info("GET  to: /properties");
-        return this.esbMockService.getResponseData(LoanAccountPropertiesResponse.class);
+        return this.esbMockService.getResponseEntityByClass(LoanAccountPropertiesResponse.class);
     }
 
     @PostMapping("/loans/{loanAccountNumber}/properties")
@@ -70,7 +63,7 @@ public class EsbMockController {
     @PostMapping("/loans")
     public ResponseEntity createLoanAccount() {
         log.info("POST to: /loans");
-        return this.esbMockService.getResponseData(LoanAccountResponse.class);
+        return this.esbMockService.getResponseEntityByClass(LoanAccountResponse.class);
     }
 
     @PostMapping("/loans/{loanAccountNumber}/aggreement")
@@ -88,19 +81,19 @@ public class EsbMockController {
     @GetMapping("/loans/{loanAccountNumber}/source-code-info")
     public ResponseEntity getSourceCodeInfo() {
         log.info("GET  to: /source-code-info");
-        return this.esbMockService.getResponseData(InsertSourceCodeInfoResponse.class);
+        return this.esbMockService.getResponseEntityByClass(InsertSourceCodeInfoResponse.class);
     }
 
     @PostMapping("/loans/{loanAccountNumber}/source-code-info")
     public ResponseEntity insertSourceCodeInfo() {
         log.info("POST to: /source-code-info");
-        return this.esbMockService.getResponseData(InsertSourceCodeInfoResponse.class);
+        return this.esbMockService.getResponseEntityByClass(InsertSourceCodeInfoResponse.class);
     }
 
     @GetMapping("/loans/{loanAccountNumber}/insurances")
     public ResponseEntity getLoanAccountInsurances() {
         log.info("GET  to: /insurances");
-        return this.esbMockService.getResponseData(RetrieveInsurancesResponse.class);
+        return this.esbMockService.getResponseEntityByClass(RetrieveInsurancesResponse.class);
     }
 
     @PostMapping("/loans/{loanAccountNumber}/insurances")
@@ -112,7 +105,7 @@ public class EsbMockController {
     @GetMapping("loans/{loanAccountNumber}/collaterals")
     public ResponseEntity getLoanAccountCollaterals() {
         log.info("GET  to: /collaterals");
-        return this.esbMockService.getResponseData(ListOfCollateralsResponse.class);
+        return this.esbMockService.getResponseEntityByClass(ListOfCollateralsResponse.class);
     }
 
     @PostMapping("loans/{loanAccountNumber}/collaterals")
@@ -142,13 +135,13 @@ public class EsbMockController {
     @GetMapping("/loans/{loanAccountNumber}/loan-guarantees-expenses")
     public ResponseEntity loanGuaranteesExpenses() {
         log.info("GET  to: /loan-guarantees-expenses");
-        return this.esbMockService.getResponseData(LoanExpenseDetailsResponse.class);
+        return this.esbMockService.getResponseEntityByClass(LoanExpenseDetailsResponse.class);
     }
 
     @PostMapping("loans/{loanAccountNumber}/participants")
     public ResponseEntity insertLoanParticipant() {
         log.info("POST to: /participants");
-        return this.esbMockService.getResponseData(InsertLoanParticipantResponse.class);
+        return this.esbMockService.getResponseEntityByClass(InsertLoanParticipantResponse.class);
     }
 
     @PostMapping("/loans/{loanAccountNumber}/permanent-delay-collection")
@@ -179,7 +172,7 @@ public class EsbMockController {
                 new BigDecimal(0),
                 new BigDecimal(0));
 
-        return this.esbMockService.getResponseObject(data);
+        return this.esbMockService.convertObjectToResponseEntity(data);
     }
 
     @PostMapping("/loans/{loanAccountNumber}/capitalization")
@@ -212,54 +205,9 @@ public class EsbMockController {
         return this.esbMockService.getSuccessResponse();
     }
 
-    @PostMapping("/requestResponse")
-    public ResponseEntity getRequestResponse(HttpEntity<String> requestResponse) {
-        String requestBody = requestResponse.getBody();
-        log.info("POST to: /requestResponse");
-
-        jmsTemplate.convertAndSend(this.queue, requestBody);
-
-        return ResponseEntity.ok(requestBody);
-    }
-
-    @GetMapping("/accounts/{accountNumber}/steps")
-    public ResponseEntity accoutnOpeningSteps() {
-        log.info("GET  to: /steps");
-        OpenAccountStepsResponse data = new OpenAccountStepsResponse("NNNNNNNNNNNNNNNNN", "96", "EUROHOME BALLOON 5 ΧΡ. ΣΤΑΘΕΡΟ", "3954", "001002003004040041005042043007008034044082009010013", "P", "ΔΑΝΕΙΑ", "YYYYYYYYYYYYYYYYY");
-        return this.esbMockService.getResponseObject(data);
-    }
-
-    @PostMapping("/accounts/money-transfer")
-    public ResponseEntity moneyTransferBetweenAccounts() {
-        log.info("POST to: /money-transfer");
-        return this.esbMockService.getSuccessResponse();
-    }
-
-    @GetMapping("/accounts/{accountNumber}/services")
-    public ResponseEntity getAccountServices() {
-        log.info("GET  to: /services");
-        return this.esbMockService.getResponseData(GetAccountServicesResponse.class);
-    }
-
     @PutMapping("/loans/{loanAccountNumber}/servicing-account")
     public ResponseEntity updateLoanServicingAccount() {
         log.info("PUT  to: /servicing-account");
         return this.esbMockService.getSuccessResponse();
-    }
-
-    @PostMapping("/accounts/{accountNumber}/participants")
-    public ResponseEntity addAccountParticipant() {
-        log.info("POST to: /participants");
-        return this.esbMockService.getSuccessResponse();
-    }
-
-    @GetMapping("/accounts/{accountNumber}/balance")
-    public ResponseEntity getAccountBalance() {
-        log.info("GET  to: /balance");
-        AccountBalanceResponse data = this.esbMockService.getObject(AccountBalanceResponse.class);
-
-        data.setAvailableBalance(new BigDecimal(0.1112));
-
-        return ResponseEntity.ok(data);
     }
 }

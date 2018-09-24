@@ -1,6 +1,6 @@
 package gr.eurobank.transactions.esbmock.services;
 
-import gr.eurobank.transactions.esbmock.models.dto.SuccessResponse;
+import gr.eurobank.transactions.esbmock.models.SuccessResponse;
 import io.github.benas.randombeans.EnhancedRandomBuilder;
 import io.github.benas.randombeans.api.EnhancedRandom;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@ public class EsbMockService {
                 .build();
     }
 
-    public ResponseEntity<?> getResponseData(Class<?> clazz) {
+    public ResponseEntity<?> getResponseEntityByClass(Class<?> clazz) {
         return ResponseEntity.accepted().body(this.getObject(clazz));
     }
 
@@ -28,7 +28,7 @@ public class EsbMockService {
         return ResponseEntity.accepted().body(new SuccessResponse(true));
     }
 
-    public ResponseEntity<?> getResponseObject(Object data) {
+    public ResponseEntity<?> convertObjectToResponseEntity(Object data) {
         return ResponseEntity.accepted().body(data);
     }
 
