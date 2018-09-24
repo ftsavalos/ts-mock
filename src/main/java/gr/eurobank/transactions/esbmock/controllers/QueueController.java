@@ -26,12 +26,8 @@ public class QueueController {
     @PostMapping("/requestResponse")
     public ResponseEntity getRequestResponse(HttpEntity<String> requestResponse) {
         String requestBody = requestResponse.getBody();
-        log.info("POST to: /requestResponse");
-
         jmsTemplate.convertAndSend(this.queue, requestBody);
 
         return ResponseEntity.ok(requestBody);
     }
-
-
 }

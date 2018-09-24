@@ -1,4 +1,4 @@
-package gr.eurobank.transactions.esbmock.models.dto;
+package gr.eurobank.transactions.esbmock.models.loan.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

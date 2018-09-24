@@ -21,15 +21,15 @@ public class EsbMockService {
     }
 
     public ResponseEntity<?> getResponseEntityByClass(Class<?> clazz) {
-        return ResponseEntity.accepted().body(this.getObject(clazz));
+        return ResponseEntity.ok().body(this.getObject(clazz));
     }
 
     public ResponseEntity<SuccessResponse> getSuccessResponse() {
-        return ResponseEntity.accepted().body(new SuccessResponse(true));
+        return ResponseEntity.ok().body(new SuccessResponse(true));
     }
 
     public ResponseEntity<?> convertObjectToResponseEntity(Object data) {
-        return ResponseEntity.accepted().body(data);
+        return ResponseEntity.ok().body(data);
     }
 
     public <T> T getObject(Class<T> clazz) {
