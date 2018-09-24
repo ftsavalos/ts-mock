@@ -1,4 +1,4 @@
-package gr.eurobank.transactions.esbmock.listener;
+package gr.eurobank.transactions.esbmock.listeners;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
