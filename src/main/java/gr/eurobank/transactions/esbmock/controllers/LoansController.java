@@ -140,11 +140,11 @@ public class LoansController {
     @GetMapping("/loans/{loanAccountNumber}/overdue-debt")
     public ResponseEntity getOverDueDept() {
         GetOverdueDebtResponse data = new GetOverdueDebtResponse(
-                new BigDecimal(0.2),
-                new BigDecimal(0),
-                new BigDecimal(0),
-                new BigDecimal(0),
-                new BigDecimal(0));
+                new BigDecimal("0.2"),
+                new BigDecimal("0"),
+                new BigDecimal("0"),
+                new BigDecimal("0"),
+                new BigDecimal("0"));
 
         return this.esbMockService.convertObjectToResponseEntity(data);
     }

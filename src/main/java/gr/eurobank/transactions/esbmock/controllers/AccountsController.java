@@ -61,8 +61,18 @@ public class AccountsController {
         return this.esbMockService.getResponseEntityByClass(NumberAccountResponse.class);
     }
 
+    @PostMapping("/accounts/{accountNumber}/contract")
+    public ResponseEntity newAccountContractIssue() {
+        return this.esbMockService.getSuccessResponse();
+    }
+
     @PostMapping("/accounts/{accountNumber}/categorization")
     public ResponseEntity newAccountCategorization(HttpServletRequest request) {
         return this.esbMockService.getResponseEntityByClass(PreOpenResponse.class);
+    }
+
+    @PostMapping("/accounts/{accountNumber}/formalization")
+    public ResponseEntity newAccountFormalization() {
+        return this.esbMockService.getSuccessResponse();
     }
 }
