@@ -75,4 +75,9 @@ public class AccountsController {
     public ResponseEntity newAccountFormalization() {
         return this.esbMockService.getSuccessResponse();
     }
+
+    @PostMapping("/accounts/{accountNumber}/cancellation")
+    public ResponseEntity accountCancellation() {
+        return this.esbMockService.getSuccessResponse();
+    }
 }
