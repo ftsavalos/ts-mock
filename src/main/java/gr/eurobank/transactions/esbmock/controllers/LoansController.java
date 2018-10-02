@@ -178,4 +178,9 @@ public class LoansController {
     public ResponseEntity updateLoanServicingAccount() {
         return this.esbMockService.getSuccessResponse();
     }
+
+    @PostMapping("/loans/{loanAccountNumber}/manage-parameters")
+    public ResponseEntity manageParametersRequest() {
+        return this.esbMockService.getSuccessResponse();
+    }
 }
