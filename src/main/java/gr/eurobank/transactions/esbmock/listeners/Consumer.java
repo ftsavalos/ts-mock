@@ -7,11 +7,16 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-@Profile("queueConsumer")
+@Profile("consumerEnabled")
 public class Consumer {
 
+    @JmsListener(destination = "${activemq.topic}")
+    public void consumeFromTopic(String message) {
+        log.info("Received from Topic: {}", message);
+    }
+
     @JmsListener(destination = "${activemq.queue}")
-    public void consume(String message) {
-        log.info("Received Message: {}", message);
+    public void consumeFromQueue(String message) {
+        log.info("Received from queue: {}", message);
     }
 }
