@@ -29,7 +29,7 @@ public class ActiveMQConfig {
     }
 
     @Bean
-    public Topic topic(){
+    public Topic topic() {
         return new ActiveMQTopic(this.topicDestination);
     }
 
