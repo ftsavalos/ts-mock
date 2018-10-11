@@ -16,9 +16,11 @@ public class InsertSourceCodeInfoResponse {
     private BigDecimal minimumCommission;
     private BigDecimal spread;
     private String originCode;
+    private BigDecimal costOfGoods;
     private String sourceCode;
     private String originType;
     private Boolean defaultAccountFlag;
     private Boolean defaultComSpreadFlag;
+    private BigDecimal downpayment;
 
 }

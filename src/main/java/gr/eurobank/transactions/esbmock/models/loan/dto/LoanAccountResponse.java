@@ -11,10 +11,7 @@ public class LoanAccountResponse {
 
     private String loanAccountNumber;
     private String subproductDescription;
-
-
     private String durationDescription;
-
     private String purposeDescription;
     private String languageDescription;
     private Date applicationReceiveDate;

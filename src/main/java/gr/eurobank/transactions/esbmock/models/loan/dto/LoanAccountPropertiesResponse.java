@@ -10,6 +10,6 @@ import java.util.List;
 @Data
 public class LoanAccountPropertiesResponse {
 
-    List<Property> listOfProperties;
+    private List<Property> listOfProperties;
 
 }
