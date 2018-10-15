@@ -22,6 +22,4 @@ public class Insurance {
     private BigDecimal contractCost;
     private Double commissionPercentage;
     private String collectionModality;
-
-    private boolean inserted;
 }

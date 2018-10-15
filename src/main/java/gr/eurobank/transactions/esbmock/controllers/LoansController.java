@@ -13,6 +13,9 @@ import java.math.BigDecimal;
 @Slf4j
 public class LoansController {
 
+    private static final String COLLATERAL_CODE_INSURANCE_GUARANTEE = "203";
+    private static final int COLLATERAL_INSURANCE_SEQUENCE_NUMBER = 1;
+
     private final EsbMockService esbMockService;
 
     public LoansController(EsbMockService esbMockService) {
@@ -79,7 +82,12 @@ public class LoansController {
 
     @GetMapping("/loans/{loanAccountNumber}/insurances")
     public ResponseEntity getLoanAccountInsurances() {
-        return this.esbMockService.getResponseEntityByClass(RetrieveInsurancesResponse.class);
+        RetrieveInsurancesResponse insurancesResponse = this.esbMockService.getObject(RetrieveInsurancesResponse.class);
+        insurancesResponse.getListOfInsurances().forEach(ins -> {
+            ins.setGuaranteeCode(COLLATERAL_CODE_INSURANCE_GUARANTEE);
+            ins.setSequenceNumber(COLLATERAL_INSURANCE_SEQUENCE_NUMBER);
+        });
+        return this.esbMockService.convertObjectToResponseEntity(insurancesResponse);
     }
 
     @PostMapping("/loans/{loanAccountNumber}/insurances")
@@ -89,7 +97,12 @@ public class LoansController {
 
     @GetMapping("loans/{loanAccountNumber}/collaterals")
     public ResponseEntity getLoanAccountCollaterals() {
-        return this.esbMockService.getResponseEntityByClass(ListOfCollateralsResponse.class);
+        ListOfCollateralsResponse listOfCollateralsResponse = this.esbMockService.getObject(ListOfCollateralsResponse.class);
+        listOfCollateralsResponse.getListOfCollaterals().forEach(col-> {
+            col.setCollateralCode(COLLATERAL_CODE_INSURANCE_GUARANTEE);
+            col.setSequenceNumber(COLLATERAL_INSURANCE_SEQUENCE_NUMBER);
+        });
+        return this.esbMockService.convertObjectToResponseEntity(listOfCollateralsResponse);
     }
 
     @PostMapping("loans/{loanAccountNumber}/collaterals")

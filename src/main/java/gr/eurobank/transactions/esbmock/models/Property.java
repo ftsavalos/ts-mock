@@ -15,7 +15,4 @@ public class Property {
     private Integer burdenSequenceNumber;
     private String clientCollaborator;
     private BigDecimal appraisalCost;
-
-    private boolean inserted;
-    private boolean deleted;
 }
