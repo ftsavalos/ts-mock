@@ -17,6 +17,6 @@ public class Consumer {
 
     @JmsListener(destination = "${activemq.queue}")
     public void consumeFromQueue(String message) {
-        log.info("Received from queue: {}", message);
+        log.info("{}", message);
     }
 }

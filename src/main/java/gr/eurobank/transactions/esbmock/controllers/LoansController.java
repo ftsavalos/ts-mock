@@ -1,5 +1,6 @@
 package gr.eurobank.transactions.esbmock.controllers;
 
+import gr.eurobank.transactions.esbmock.models.Collateral;
 import gr.eurobank.transactions.esbmock.models.loan.dto.*;
 import gr.eurobank.transactions.esbmock.services.EsbMockService;
 import lombok.extern.slf4j.Slf4j;
@@ -7,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 
 @RestController
 @RequestMapping("/ocp-middleware/{channel}")
@@ -97,11 +99,20 @@ public class LoansController {
 
     @GetMapping("loans/{loanAccountNumber}/collaterals")
     public ResponseEntity getLoanAccountCollaterals() {
-        ListOfCollateralsResponse listOfCollateralsResponse = this.esbMockService.getObject(ListOfCollateralsResponse.class);
-        listOfCollateralsResponse.getListOfCollaterals().forEach(col-> {
+        ListOfCollateralsResponse listOfCollateralsResponse = new ListOfCollateralsResponse(
+                Arrays.asList(
+                        this.esbMockService.getObject(Collateral.class),
+                        this.esbMockService.getObject(Collateral.class),
+                        this.esbMockService.getObject(Collateral.class)
+                )
+        );
+
+        listOfCollateralsResponse.getListOfCollaterals().forEach(a -> log.info("{}", a));
+        listOfCollateralsResponse.getListOfCollaterals().forEach(col -> {
             col.setCollateralCode(COLLATERAL_CODE_INSURANCE_GUARANTEE);
             col.setSequenceNumber(COLLATERAL_INSURANCE_SEQUENCE_NUMBER);
         });
+
         return this.esbMockService.convertObjectToResponseEntity(listOfCollateralsResponse);
     }
 
