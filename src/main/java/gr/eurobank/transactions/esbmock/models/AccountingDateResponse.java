@@ -1,4 +1,4 @@
-package gr.eurobank.transactions.esbmock.services;
+package gr.eurobank.transactions.esbmock.models;
 
 import lombok.Data;
 

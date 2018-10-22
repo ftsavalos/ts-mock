@@ -1,6 +1,6 @@
 package gr.eurobank.transactions.esbmock.controllers;
 
-import gr.eurobank.transactions.esbmock.services.AccountingDateResponse;
+import gr.eurobank.transactions.esbmock.models.AccountingDateResponse;
 import gr.eurobank.transactions.esbmock.services.EsbMockService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
