@@ -168,7 +168,7 @@ public class LoansController {
                 new BigDecimal("0"),
                 new BigDecimal("0"),
                 new BigDecimal("0"),
-                new BigDecimal("0"));
+                new BigDecimal("0.2"));
 
         return this.esbMockService.convertObjectToResponseEntity(data);
     }
@@ -210,6 +210,16 @@ public class LoansController {
 
     @PostMapping("/loans/{loanAccountNumber}/credit-scoring")
     public ResponseEntity creditScoring() {
+        return this.esbMockService.getSuccessResponse();
+    }
+
+    @PostMapping("/loans/{loanAccountNumber}/merchant-credit")
+    public ResponseEntity handleMerchantCredit() {
+        return this.esbMockService.getSuccessResponse();
+    }
+
+    @PostMapping("loans/{loanAccountNumber}/expenses-partial-discharge")
+    public ResponseEntity loanExpensesPartialDischarge() {
         return this.esbMockService.getSuccessResponse();
     }
 }
