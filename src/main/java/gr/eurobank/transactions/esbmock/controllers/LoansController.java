@@ -62,8 +62,8 @@ public class LoansController {
         return this.esbMockService.getResponseEntityByClass(LoanAccountResponse.class);
     }
 
-    @PostMapping("/loans/{loanAccountNumber}/aggreement")
-    public ResponseEntity finalizeLoanAggreement() {
+    @PostMapping("/loans/{loanAccountNumber}/agreement")
+    public ResponseEntity finalizeLoanAgrevtement() {
         return this.esbMockService.getSuccessResponse();
     }
 
@@ -138,7 +138,12 @@ public class LoansController {
 
     @GetMapping("/loans/{loanAccountNumber}/loan-guarantees-expenses")
     public ResponseEntity loanGuaranteesExpenses() {
-        return this.esbMockService.getResponseEntityByClass(LoanExpenseDetailsResponse.class);
+        LoanExpenseDetailsResponse data = this.esbMockService.getObject(LoanExpenseDetailsResponse.class);
+        data.getLoanExpenseDetails().forEach(expense ->  {
+            expense.setDischarged(false);
+            expense.setExpenseRecupFlag("5");
+        });
+        return this.esbMockService.convertObjectToResponseEntity(data);
     }
 
     @PostMapping("loans/{loanAccountNumber}/participants")
@@ -164,11 +169,11 @@ public class LoansController {
     @GetMapping("/loans/{loanAccountNumber}/overdue-debt")
     public ResponseEntity getOverDueDept() {
         GetOverdueDebtResponse data = new GetOverdueDebtResponse(
-                new BigDecimal("0.2"),
+                new BigDecimal("10"),
                 new BigDecimal("0"),
-                new BigDecimal("0"),
-                new BigDecimal("0"),
-                new BigDecimal("0.2"));
+                new BigDecimal("30"),
+                new BigDecimal("20"),
+                new BigDecimal("0"));
 
         return this.esbMockService.convertObjectToResponseEntity(data);
     }

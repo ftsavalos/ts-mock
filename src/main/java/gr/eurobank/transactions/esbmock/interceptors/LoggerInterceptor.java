@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 public class LoggerInterceptor extends HandlerInterceptorAdapter {
 
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
         log.info("{} to: {}", request.getMethod(), this.getPartialURI(request.getRequestURI()));
     }
 
