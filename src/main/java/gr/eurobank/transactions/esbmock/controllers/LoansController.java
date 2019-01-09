@@ -142,6 +142,7 @@ public class LoansController {
         data.getLoanExpenseDetails().forEach(expense ->  {
             expense.setDischarged(false);
             expense.setExpenseRecupFlag("5");
+            expense.setExpenseCode("250");
         });
         return this.esbMockService.convertObjectToResponseEntity(data);
     }
@@ -225,6 +226,21 @@ public class LoansController {
 
     @PostMapping("loans/{loanAccountNumber}/expenses-partial-discharge")
     public ResponseEntity loanExpensesPartialDischarge() {
+        return this.esbMockService.getSuccessResponse();
+    }
+
+    @PostMapping("loans/{loanAccountNumber}/contact-person")
+    public ResponseEntity contactNumber() {
+        return this.esbMockService.getSuccessResponse();
+    }
+
+    @GetMapping("loans/{loanAccountNumber}/loan-basic-data")
+    public ResponseEntity loanBasicData() {
+        return this.esbMockService.getResponseEntityByClass(LoanBasicDataResponse.class);
+    }
+
+    @PostMapping("loans/{loanAccountNumber}/collect-total-delay-bill")
+    public ResponseEntity collectTotalDelayBill() {
         return this.esbMockService.getSuccessResponse();
     }
 }
