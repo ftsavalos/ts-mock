@@ -243,4 +243,9 @@ public class LoansController {
     public ResponseEntity collectTotalDelayBill() {
         return this.esbMockService.getSuccessResponse();
     }
+
+    @PostMapping("loans/{loanAccountNumber}/early-loan-repayment")
+    public ResponseEntity earlyLoanRepayment() {
+        return this.esbMockService.getSuccessResponse();
+    }
 }
