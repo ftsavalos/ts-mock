@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.util.Arrays;
 
+import static gr.eurobank.transactions.esbmock.controllers.ControllerConstants.COLLATERAL_CODE_INSURANCE_GUARANTEE;
+import static gr.eurobank.transactions.esbmock.controllers.ControllerConstants.COLLATERAL_INSURANCE_SEQUENCE_NUMBER;
+
 @RestController
 @RequestMapping("/ocp-middleware/{channel}")
 @Slf4j
 public class LoansController {
-
-    private static final String COLLATERAL_CODE_INSURANCE_GUARANTEE = "203";
-    private static final int COLLATERAL_INSURANCE_SEQUENCE_NUMBER = 1;
 
     private final EsbMockService esbMockService;
 
@@ -142,7 +142,7 @@ public class LoansController {
         data.getLoanExpenseDetails().forEach(expense ->  {
             expense.setDischarged(false);
             expense.setExpenseRecupFlag("5");
-            expense.setExpenseCode("250");
+            expense.setExpenseCode("940");
         });
         return this.esbMockService.convertObjectToResponseEntity(data);
     }
@@ -246,6 +246,21 @@ public class LoansController {
 
     @PostMapping("loans/{loanAccountNumber}/early-loan-repayment")
     public ResponseEntity earlyLoanRepayment() {
+        return this.esbMockService.getSuccessResponse();
+    }
+
+    @GetMapping("loans/{loanAccountNumber}/written-off-loans")
+    public ResponseEntity writtenOffLoans() {
+        WrittenOffLoansResponse writtenOffLoans = new WrittenOffLoansResponse(
+                new BigDecimal("0"),
+                new BigDecimal("60"),
+                new BigDecimal("100")
+        );
+        return this.esbMockService.convertObjectToResponseEntity(writtenOffLoans);
+    }
+
+    @PostMapping("loans/{loanAccountNumber}/written-off-loans-collection")
+    public ResponseEntity writtenOffLoansCollection() {
         return this.esbMockService.getSuccessResponse();
     }
 }

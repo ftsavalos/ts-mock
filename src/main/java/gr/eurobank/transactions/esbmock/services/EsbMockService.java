@@ -25,7 +25,7 @@ public class EsbMockService {
     }
 
     public ResponseEntity<SuccessResponse> getSuccessResponse() {
-        return ResponseEntity.ok().body(new SuccessResponse(true));
+        return ResponseEntity.ok().body(new SuccessResponse(true, "test"));
     }
 
     public ResponseEntity<?> convertObjectToResponseEntity(Object data) {
