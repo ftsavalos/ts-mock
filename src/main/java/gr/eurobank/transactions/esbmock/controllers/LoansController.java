@@ -1,6 +1,8 @@
 package gr.eurobank.transactions.esbmock.controllers;
 
+import com.google.common.collect.Lists;
 import gr.eurobank.transactions.esbmock.models.Collateral;
+import gr.eurobank.transactions.esbmock.models.UnpaidInstallment;
 import gr.eurobank.transactions.esbmock.models.loan.dto.*;
 import gr.eurobank.transactions.esbmock.services.EsbMockService;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
 
 import static gr.eurobank.transactions.esbmock.controllers.ControllerConstants.COLLATERAL_CODE_INSURANCE_GUARANTEE;
 import static gr.eurobank.transactions.esbmock.controllers.ControllerConstants.COLLATERAL_INSURANCE_SEQUENCE_NUMBER;
@@ -262,5 +266,32 @@ public class LoansController {
     @PostMapping("loans/{loanAccountNumber}/written-off-loans-collection")
     public ResponseEntity writtenOffLoansCollection() {
         return this.esbMockService.getSuccessResponse();
+    }
+
+    @PostMapping("loans/{loanAccountNumber}/suspension")
+    public ResponseEntity insertLoanSuspension() {
+        return this.esbMockService.getSuccessResponse();
+    }
+
+    @GetMapping("loans/{loanAccountNumber}/unpaid-installments")
+    public ResponseEntity getUnpaidInstallments() {
+        Calendar oldest = Calendar.getInstance();
+        oldest.set(2014, Calendar.FEBRUARY, 12);
+        UnpaidInstallment ui1 = new UnpaidInstallment(oldest.getTime(), new BigDecimal("2.23"), new BigDecimal("100.34"), new BigDecimal("0.23"), new BigDecimal("10.13"));
+
+        Calendar old = Calendar.getInstance();
+        old.set(2015, Calendar.MARCH, 12);
+        UnpaidInstallment ui2 = new UnpaidInstallment(old.getTime(), new BigDecimal("2.23"), new BigDecimal("100.34"), new BigDecimal("0.23"), new BigDecimal("10.13"));
+
+        Calendar current = Calendar.getInstance();
+        current.set(2015, Calendar.DECEMBER, 12);
+        UnpaidInstallment ui3 = new UnpaidInstallment(current.getTime(), new BigDecimal("2.23"), new BigDecimal("100.34"), new BigDecimal("0.23"), new BigDecimal("10.13"));
+
+        List<UnpaidInstallment> unpaidInstallments = Lists.newArrayList(ui3, ui2, ui1);
+        GetUnpaidInstallmentsResponse getUnpaidInstallmentsResponse = new GetUnpaidInstallmentsResponse();
+        getUnpaidInstallmentsResponse.setBusinessUnit("0023");
+        getUnpaidInstallmentsResponse.setCurrentDate(Calendar.getInstance().getTime());
+        getUnpaidInstallmentsResponse.setUnpaidInstallments(unpaidInstallments);
+        return this.esbMockService.convertObjectToResponseEntity(getUnpaidInstallmentsResponse);
     }
 }
