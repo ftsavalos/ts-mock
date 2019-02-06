@@ -143,13 +143,14 @@ public class LoansController {
     @GetMapping("/loans/{loanAccountNumber}/loan-guarantees-expenses")
     public ResponseEntity loanGuaranteesExpenses() {
         LoanExpenseDetailsResponse data = this.esbMockService.getObject(LoanExpenseDetailsResponse.class);
-        data.getLoanExpenseDetails().forEach(expense ->  {
+        data.getLoanExpenseDetails().forEach(expense -> {
             expense.setDischarged(false);
             expense.setExpenseRecupFlag("5");
             expense.setExpenseCode("940");
         });
 //        return this.esbMockService.convertObjectToResponseEntity(data);
         return ResponseEntity.badRequest().build();
+    }
     
 
     @PostMapping("loans/{loanAccountNumber}/participants")
