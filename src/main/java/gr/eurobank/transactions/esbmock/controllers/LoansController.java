@@ -144,8 +144,9 @@ public class LoansController {
             expense.setExpenseRecupFlag("5");
             expense.setExpenseCode("940");
         });
-        return this.esbMockService.convertObjectToResponseEntity(data);
-    }
+//        return this.esbMockService.convertObjectToResponseEntity(data);
+        return ResponseEntity.badRequest().build();
+    
 
     @PostMapping("loans/{loanAccountNumber}/participants")
     public ResponseEntity insertLoanParticipant() {
