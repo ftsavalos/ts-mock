@@ -38,6 +38,11 @@ public class AccountsController {
         return this.esbMockService.getSuccessResponse();
     }
 
+    @PostMapping("/accounts/money-transfer-entaksi")
+    public ResponseEntity moneyTransferBetweenAccountsCL(){
+        return this.esbMockService.getSuccessResponse();
+    }
+
     @GetMapping("/accounts/{accountNumber}/services")
     public ResponseEntity getAccountServices() {
         return this.esbMockService.getResponseEntityByClass(GetAccountServicesResponse.class);

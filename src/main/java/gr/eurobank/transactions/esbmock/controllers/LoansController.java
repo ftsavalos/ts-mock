@@ -84,6 +84,7 @@ public class LoansController {
     @PostMapping("/loans/{loanAccountNumber}/source-code-info")
     public ResponseEntity insertSourceCodeInfo() {
         return this.esbMockService.getResponseEntityByClass(InsertSourceCodeInfoResponse.class);
+//        return ResponseEntity.badRequest().build();
     }
 
     @GetMapping("/loans/{loanAccountNumber}/insurances")
@@ -148,8 +149,7 @@ public class LoansController {
             expense.setExpenseRecupFlag("5");
             expense.setExpenseCode("940");
         });
-//        return this.esbMockService.convertObjectToResponseEntity(data);
-        return ResponseEntity.badRequest().build();
+        return this.esbMockService.convertObjectToResponseEntity(data);
     }
     
 
@@ -295,5 +295,15 @@ public class LoansController {
         getUnpaidInstallmentsResponse.setCurrentDate(Calendar.getInstance().getTime());
         getUnpaidInstallmentsResponse.setUnpaidInstallments(unpaidInstallments);
         return this.esbMockService.convertObjectToResponseEntity(getUnpaidInstallmentsResponse);
+    }
+
+    @DeleteMapping("loans/{loanAccountNumber}/dynamic-installments")
+    public ResponseEntity deleteDynamicInstallments() {
+        return this.esbMockService.getSuccessResponse();
+    }
+
+    @PostMapping("loans/{loanAccountNumber}/dynamic-installments")
+    public ResponseEntity<?> insertDynamicInstallments() {
+        return this.esbMockService.getSuccessResponse();
     }
 }
