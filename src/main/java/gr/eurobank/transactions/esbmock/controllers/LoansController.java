@@ -151,7 +151,6 @@ public class LoansController {
         });
         return this.esbMockService.convertObjectToResponseEntity(data);
     }
-    
 
     @PostMapping("loans/{loanAccountNumber}/participants")
     public ResponseEntity insertLoanParticipant() {

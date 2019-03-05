@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Slf4j
 @Component
-public class LoggerInterceptor extends HandlerInterceptorAdapter {
+public class LoggingInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
