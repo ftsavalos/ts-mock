@@ -12,11 +12,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class EsbMockExceptionHandler extends ResponseEntityExceptionHandler {
 
-
     @ExceptionHandler(value = {PathVariableNullityException.class})
     public ResponseEntity handlePathVariableNullityException(PathVariableNullityException ex, WebRequest request) {
         Error error = new Error("SM", ex.getMessage());
         ErrorPayload errorPaylod = new ErrorPayload(Lists.newArrayList(error));
         return ResponseEntity.badRequest().body(errorPaylod);
     }
+
 }

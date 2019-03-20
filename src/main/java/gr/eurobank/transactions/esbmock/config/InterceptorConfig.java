@@ -1,7 +1,7 @@
 package gr.eurobank.transactions.esbmock.config;
 
-import gr.eurobank.transactions.esbmock.interceptors.LoggingInterceptor;
-import gr.eurobank.transactions.esbmock.interceptors.OriginatorInterceptor;
+import gr.eurobank.transactions.esbmock.interceptor.LoggingInterceptor;
+import gr.eurobank.transactions.esbmock.interceptor.OriginatorInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -20,6 +20,6 @@ public class InterceptorConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loggingInterceptor);
-        registry.addInterceptor(originatorInterceptor).addPathPatterns("/**").excludePathPatterns("/**/requestResponse");
+        registry.addInterceptor(originatorInterceptor).addPathPatterns("/**").excludePathPatterns("/ocpm/services/stm/internal/flow-execution-response/**");
     }
 }
