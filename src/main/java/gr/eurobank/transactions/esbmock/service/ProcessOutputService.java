@@ -27,28 +27,12 @@ public class ProcessOutputService {
         historyRequestMappings.put("depositAccountFlow", "depositaccount");
         historyRequestMappings.put("loanAccountFlow", "loanaccount");
         historyRequestMappings.put("loanAccountAutoMotoFlow", "loanaccountautomoto");
-//        historyRequestMappings.put("depositaccount", "depositAccount");
-//        historyRequestMappings.put("depositaccount", "depositAccount");
-//        historyRequestMappings.put("depositaccount", "depositAccount");
-//        historyRequestMappings.put("depositaccount", "depositAccount");
-//        historyRequestMappings.put("depositaccount", "depositAccount");
-//        historyRequestMappings.put("depositaccount", "depositAccount");
-//        historyRequestMappings.put("depositaccount", "depositAccount");
-//        historyRequestMappings.put("depositaccount", "depositAccount");
-//        historyRequestMappings.put("depositaccount", "depositAccount");
+        historyRequestMappings.put("loanAccountCLRemedialFlow", "loanaccountclremedial");
+        historyRequestMappings.put("clAmortizedLoanUpdatedStatusCollectionFlow", "cl-amortizedloanpermanentdelaycollection");
+        historyRequestMappings.put("clAmortizedLoanUpdatedStatusTTECollectionFlow", "cl-amortizedloanupdatedstatus-tte-collection");
+        historyRequestMappings.put("clAmortizedLoanPermanentDelayCollectionFlow", "cl-amortizedloanpermanentdelaycollection");
+        historyRequestMappings.put("clAmortizedLoanInDeletionCollectionFlow", "cl-amortizedloanindeletioncollection");
 
-//            "depositaccount",
-//            "loanaccount",
-//            "loanaccountautomoto",
-//            "cl-amortized-load-dpo-cash-repayment",
-//            "cl-amortizedloanpermanentdelaycollection",
-//            "cl-amortizedloanupdatedstatuscollection",
-//            "cl-amortizedloanupdatedstatus-tte-collection",
-//            "cl-amortizedloanindeletioncollection",
-//            "loanaccountclremedial",
-//            "loanaccountcro",
-//            "lowstartdenounced",
-//            "lowstartnondenounced"
     }
 
     private final HistoryRepository historyRepository;
@@ -99,8 +83,13 @@ public class ProcessOutputService {
     }
 
     private String getInputOriginator(String runHistory) {
-        log.info("{}", runHistory);
-        return JsonPath.read(runHistory, "$.processInstanceRevisions[-1:].auditData").toString();
+        try {
+            // for flows with more than one processes
+            return JsonPath.read(runHistory, "$[-1:].processInstanceRevisions[-1:].auditData").toString();
+        } catch (PathNotFoundException e) {
+            // for flows with one process
+            return JsonPath.read(runHistory, "$.processInstanceRevisions[-1:].auditData").toString();
+        }
     }
 
     private boolean isMock(String runHistory) {
