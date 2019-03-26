@@ -1,7 +1,6 @@
 package gr.eurobank.transactions.esbmock.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.PathNotFoundException;
 import gr.eurobank.transactions.esbmock.model.entity.History;
@@ -16,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -32,19 +32,16 @@ public class ProcessOutputService {
         historyRequestMappings.put("clAmortizedLoanUpdatedStatusTTECollectionFlow", "cl-amortizedloanupdatedstatus-tte-collection");
         historyRequestMappings.put("clAmortizedLoanPermanentDelayCollectionFlow", "cl-amortizedloanpermanentdelaycollection");
         historyRequestMappings.put("clAmortizedLoanInDeletionCollectionFlow", "cl-amortizedloanindeletioncollection");
-
     }
 
     private final HistoryRepository historyRepository;
     private final RestTemplate restTemplate;
-    private final ObjectMapper mapper;
     @Value("${endpoint.state-machine.history}")
     private String stateMachineHistoryUrl;
 
-    public ProcessOutputService(HistoryRepository historyRepository, RestTemplate restTemplate, ObjectMapper mapper) {
+    public ProcessOutputService(HistoryRepository historyRepository, RestTemplate restTemplate) {
         this.historyRepository = historyRepository;
         this.restTemplate = restTemplate;
-        this.mapper = mapper;
     }
 
 
@@ -94,6 +91,9 @@ public class ProcessOutputService {
 
     private boolean isMock(String runHistory) {
         List<String> esbEndpoints = JsonPath.read(runHistory, "$..auditData[?(@.endpoint != 'StateMachine')].endpoint");
-        return esbEndpoints.stream().anyMatch(endpoint -> endpoint.contains("localhost:3000"));
+        return esbEndpoints
+                .stream()
+                .filter(Objects::nonNull)
+                .anyMatch(endpoint -> endpoint.contains("localhost"));
     }
 }
