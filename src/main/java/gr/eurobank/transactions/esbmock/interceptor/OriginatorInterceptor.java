@@ -20,12 +20,15 @@ public class OriginatorInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Map<String, String> pathVariables = ((Map) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE));
 
-        List<Map.Entry<String, String>> nullEntries = pathVariables.entrySet().stream().filter(x -> x.getValue().equals("null")).collect(toList());
+        if (pathVariables != null) {
+            List<Map.Entry<String, String>> nullEntries = pathVariables.entrySet().stream().filter(x -> x.getValue().equals("null")).collect(toList());
 
-        if(!nullEntries.isEmpty())
-            throw new PathVariableNullityException("Path variable [" + nullEntries.get(0).getKey() + "] sent from State Machine is null");
+            if (!nullEntries.isEmpty())
+                throw new PathVariableNullityException("Path variable [" + nullEntries.get(0).getKey() + "] sent from State Machine is null");
+        }
 
         return super.preHandle(request, response, handler);
+
     }
 
 }
