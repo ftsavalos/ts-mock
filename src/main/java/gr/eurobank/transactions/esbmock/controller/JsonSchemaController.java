@@ -61,7 +61,7 @@ public class JsonSchemaController {
     private String getSchemaFromJsonRuntime(String json) throws IOException {
         File tempFile = new File("./src/main/resources/json-schema-tool/json_temp.json");
         FileUtils.writeStringToFile(tempFile, json);
-        String command = "./src/main/resources/json-schema-tool/schema-guru-0.6.2 schema ./src/main/resources/json-schema-tool/json_temp.json";
+        String command = "./src/main/resources/json-schema-tool/schema-guru-0.6.2 schema  --no-length ./src/main/resources/json-schema-tool/json_temp.json";
 
         File root = new File(".");
         Process p = Runtime.getRuntime().exec(command, (String[]) null, root);
