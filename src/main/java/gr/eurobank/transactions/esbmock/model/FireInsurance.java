@@ -3,6 +3,7 @@ package gr.eurobank.transactions.esbmock.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -14,14 +15,20 @@ public class FireInsurance {
     private String statusIndicator;
     private String currency;
     private String insuranceCompany;
-    private Double grossAmount;
+    private BigDecimal grossAmount;
     private String contractNumber;
     private Integer contractSequenceNumber;
     private Date startDate;
     private Date endDate;
     private String renewalNumber;
-    private Double fireInsuranceValue;
-    private Double earthInsuranceValue;
-    private Double grossContractCost;
+    private BigDecimal fireInsuranceValue;
+    private BigDecimal earthInsuranceValue;
+    private BigDecimal grossContractCost;
     private Date contractCancelDate;
+    private BigDecimal insurableValue;
+    private BigDecimal netContractCost;
+    private BigDecimal contractCommission;
+    private BigDecimal fireInsuranceCommission;
+    private BigDecimal partiallyCollectedAmount;
+    private BigDecimal amountDue;
 }
