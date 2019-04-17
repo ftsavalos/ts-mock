@@ -138,11 +138,6 @@ public class LoansController {
         return this.esbMockService.getSuccessResponse();
     }
 
-    @PostMapping("loans/{loanAccountNumber}/expenses-discharge")
-    public ResponseEntity loanExpensesDisharge() {
-        return this.esbMockService.getSuccessResponse();
-    }
-
     @GetMapping("/loans/{loanAccountNumber}/loan-guarantees-expenses")
     public ResponseEntity loanGuaranteesExpenses() {
         LoanExpenseDetailsResponse data = this.esbMockService.getObject(LoanExpenseDetailsResponse.class);
@@ -152,6 +147,11 @@ public class LoansController {
             expense.setExpenseCode("940");
         });
         return this.esbMockService.convertObjectToResponseEntity(data);
+    }
+
+    @PostMapping("loans/{loanAccountNumber}/expenses-discharge")
+    public ResponseEntity loanExpensesDisharge() {
+        return this.esbMockService.getSuccessResponse();
     }
 
     @PostMapping("loans/{loanAccountNumber}/participants")
@@ -243,7 +243,10 @@ public class LoansController {
 
     @GetMapping("loans/{loanAccountNumber}/loan-basic-data")
     public ResponseEntity loanBasicData() {
-        return this.esbMockService.getResponseEntityByClass(LoanBasicDataResponse.class);
+
+        LoanBasicDataResponse loanBasicData = new LoanBasicDataResponse(BigDecimal.ZERO, BigDecimal.ONE, BigDecimal.ONE);
+        return this.esbMockService.convertObjectToResponseEntity(loanBasicData);
+//        return this.esbMockService.getErrorResponse("UGE0029", "Ο Λογαριασμος ειναι ακυρωμενος η ανενεργος!!!");
     }
 
     @PostMapping("loans/{loanAccountNumber}/collect-total-delay-bill")

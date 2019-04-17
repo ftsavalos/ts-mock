@@ -11,21 +11,25 @@ public class History extends BaseEntity {
 
     private String requestId;
     private boolean success;
+    private boolean uatFlag;
     private String flow;
     @Column(columnDefinition = "TEXT")
     private String inputOriginator;
     @Column(columnDefinition = "TEXT")
     private String processOutput;
-    private boolean uatFlag;
+    private String error;
+    private String errorOnTransaction;
 
     public History() {}
 
-    public History(String requestId, boolean success, String flow, String inputOriginator, String processOutput, boolean uatFlag) {
+    public History(String requestId, boolean success, String flow, String inputOriginator, String processOutput, boolean uatFlag, String error, String errorOnTransaction) {
         this.requestId = requestId;
         this.success = success;
         this.flow = flow;
         this.inputOriginator = inputOriginator;
         this.processOutput = processOutput;
         this.uatFlag = uatFlag;
+        this.error = error;
+        this.errorOnTransaction = errorOnTransaction;
     }
 }

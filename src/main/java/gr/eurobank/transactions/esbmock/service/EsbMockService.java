@@ -1,5 +1,8 @@
 package gr.eurobank.transactions.esbmock.service;
 
+import com.google.common.collect.Lists;
+import gr.eurobank.transactions.esbmock.handler.Error;
+import gr.eurobank.transactions.esbmock.handler.ErrorPayload;
 import gr.eurobank.transactions.esbmock.model.SuccessResponse;
 import io.github.benas.randombeans.EnhancedRandomBuilder;
 import io.github.benas.randombeans.api.EnhancedRandom;
@@ -34,5 +37,9 @@ public class EsbMockService {
 
     public <T> T getObject(Class<T> clazz) {
         return this.randomizer().nextObject(clazz);
+    }
+
+    public ResponseEntity<ErrorPayload> getErrorResponse(String code, String description) {
+        return ResponseEntity.badRequest().body(new ErrorPayload(Lists.newArrayList(new Error(code, description))));
     }
 }

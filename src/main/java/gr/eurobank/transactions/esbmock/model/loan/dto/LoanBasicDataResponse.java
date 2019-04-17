@@ -10,6 +10,6 @@ import java.math.BigDecimal;
 public class LoanBasicDataResponse {
 
     private BigDecimal totalDebt;
-    private BigDecimal unpaidCapital;
     private BigDecimal totalUnpaidAmount;
+    private BigDecimal unpaidCapital;
 }
