@@ -10135,3 +10135,58 @@ SELECT request_id and uat_flag = true
 FROM HISTORY where flow = 'lowStartNonDenouncedFlow' 
 and input_originator like '%UTDF%'
 order by created desc [22018-199]
+2019-04-18 11:49:30 jdbc[44]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM HISTORY where flow =[*]'loanAccountCLRemedialFlow
+order by created desc"; SQL statement:
+SELECT * FROM HISTORY where flow ='loanAccountCLRemedialFlow
+order by created desc [42000-199]
+2019-04-18 11:49:39 jdbc[44]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM HISTORY where flow =[*]'loanAccountCLRemedialFlow
+order by created"; SQL statement:
+SELECT * FROM HISTORY where flow ='loanAccountCLRemedialFlow
+order by created [42000-199]
+2019-04-18 12:13:37 jdbc[45]: null
+org.h2.message.DbException: The connection was not closed by the application and is garbage collected [90018-199]
+	at org.h2.message.DbException.get(DbException.java:205)
+	at org.h2.message.DbException.get(DbException.java:181)
+	at org.h2.message.DbException.get(DbException.java:170)
+	at org.h2.jdbc.JdbcConnection.closeOld(JdbcConnection.java:242)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:182)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:148)
+	at org.h2.Driver.connect(Driver.java:69)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:117)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:123)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:365)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:194)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:460)
+	at com.zaxxer.hikari.pool.HikariPool.access$100(HikariPool.java:71)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:699)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:685)
+	at java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:266)
+	at java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientConnectionException: The connection was not closed by the application and is garbage collected [90018-199]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:617)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:427)
+	... 20 more
+2019-04-18 12:56:28 jdbc[65]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM HISTORY ORDER BY CREATED DESC AND[*] FLOW = 'lowStartNonDenouncedFlow' "; SQL statement:
+SELECT * FROM HISTORY order by created desc and flow = 'lowStartNonDenouncedFlow' [42000-199]
+2019-04-18 12:56:45 jdbc[65]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM HISTORY WHERE FLOW = 'and flow = 'LOWSTARTNONDENOUNCEDFLOW[*]'' ORDER BY CREATED DESC "; SQL statement:
+SELECT * FROM HISTORY where flow = 'and flow = 'lowStartNonDenouncedFlow'' order by created desc [42000-199]
+2019-04-18 12:56:56 jdbc[65]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM HISTORY where flow = 'lowStartNonDenouncedFlow'[*]' order by created desc"; SQL statement:
+SELECT * FROM HISTORY where flow = 'lowStartNonDenouncedFlow'' order by created desc [42000-199]
+2019-04-18 12:57:11 jdbc[65]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM HISTORY where flow = 'lowStartNonDenouncedFlow'[*]' 
+order by created desc"; SQL statement:
+SELECT * FROM HISTORY where flow = 'lowStartNonDenouncedFlow'' 
+order by created desc [42000-199]
+2019-04-18 12:57:24 jdbc[65]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM HISTORY where flow = 'lowStartNonDenouncedFlow'[*]'
+order by created desc"; SQL statement:
+SELECT * FROM HISTORY where flow = 'lowStartNonDenouncedFlow''
+order by created desc [42000-199]

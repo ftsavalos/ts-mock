@@ -1,8 +1,6 @@
 package gr.eurobank.transactions.esbmock.controller;
 
 import com.google.common.collect.Lists;
-import gr.eurobank.transactions.esbmock.handler.Error;
-import gr.eurobank.transactions.esbmock.handler.ErrorPayload;
 import gr.eurobank.transactions.esbmock.model.Collateral;
 import gr.eurobank.transactions.esbmock.model.UnpaidInstallment;
 import gr.eurobank.transactions.esbmock.model.loan.dto.*;
@@ -25,6 +23,8 @@ import static gr.eurobank.transactions.esbmock.controller.ControllerConstants.CO
 public class LoansController {
 
     private final EsbMockService esbMockService;
+
+    private static boolean loanBasicDataToggle;
 
     public LoansController(EsbMockService esbMockService) {
         this.esbMockService = esbMockService;
@@ -196,6 +196,13 @@ public class LoansController {
         return this.esbMockService.getSuccessResponse();
     }
 
+    @GetMapping("loans/{loanAccountNumber}/pricing-policies")
+    public ResponseEntity getPricingPolicies() {
+        SpecialPricingsResponse data = this.esbMockService.getObject(SpecialPricingsResponse.class);
+        data.getPricingPolicies().get(0).setPricingPolicyCode("114");
+        return this.esbMockService.convertObjectToResponseEntity(data);
+    }
+
     @PostMapping("loans/{loanAccountNumber}/private-contract")
     public ResponseEntity loanIssueOfPrivateContract() {
         return this.esbMockService.getSuccessResponse();
@@ -243,10 +250,14 @@ public class LoansController {
 
     @GetMapping("loans/{loanAccountNumber}/loan-basic-data")
     public ResponseEntity loanBasicData() {
+        loanBasicDataToggle = !loanBasicDataToggle;
+        if (loanBasicDataToggle) {
+            LoanBasicDataResponse loanBasicData = new LoanBasicDataResponse(BigDecimal.TEN, BigDecimal.TEN, BigDecimal.TEN);
+            return this.esbMockService.convertObjectToResponseEntity(loanBasicData);
+        } else {
+            return this.esbMockService.getErrorResponse("UGE0029", "Ο Λογαριασμος ειναι ακυρωμενος η ανενεργος!!!");
+        }
 
-        LoanBasicDataResponse loanBasicData = new LoanBasicDataResponse(BigDecimal.ZERO, BigDecimal.ONE, BigDecimal.ONE);
-        return this.esbMockService.convertObjectToResponseEntity(loanBasicData);
-//        return this.esbMockService.getErrorResponse("UGE0029", "Ο Λογαριασμος ειναι ακυρωμενος η ανενεργος!!!");
     }
 
     @PostMapping("loans/{loanAccountNumber}/collect-total-delay-bill")
@@ -309,11 +320,6 @@ public class LoansController {
     @PostMapping("loans/{loanAccountNumber}/dynamic-installments")
     public ResponseEntity<?> insertDynamicInstallments() {
         return this.esbMockService.getSuccessResponse();
-    }
-
-    @GetMapping("payload")
-    public ResponseEntity getError() {
-        return ResponseEntity.badRequest().body(new ErrorPayload(Lists.newArrayList(new Error("SM", "description"))));
     }
 
 }
