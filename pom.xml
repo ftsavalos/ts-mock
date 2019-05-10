@@ -80,7 +80,7 @@
             <version>2.9.8</version>
         </dependency>
 
-        <!--Test ActiveMQ-->
+        <!--ActiveMQ-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-activemq</artifactId>
@@ -89,7 +89,7 @@
             <groupId>org.apache.activemq</groupId>
             <artifactId>activemq-broker</artifactId>
         </dependency>
-        <!--Test ActiveMQ-->
+        <!--ActiveMQ-->
 
         <dependency>
             <groupId>com.h2database</groupId>
@@ -125,6 +125,11 @@
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>6.0.16.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
     </dependencies>

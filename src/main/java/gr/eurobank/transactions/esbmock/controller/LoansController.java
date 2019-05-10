@@ -191,6 +191,11 @@ public class LoansController {
         return this.esbMockService.getSuccessResponse();
     }
 
+    @PutMapping("loans/{loanAccountNumber}/pricing-policy")
+    public ResponseEntity updatePricingPolicy() {
+        return this.esbMockService.getSuccessResponse();
+    }
+
     @PostMapping("loans/{loanAccountNumber}/pricing-policy")
     public ResponseEntity registerNewPricingPolicy() {
         return this.esbMockService.getSuccessResponse();
@@ -250,14 +255,18 @@ public class LoansController {
 
     @GetMapping("loans/{loanAccountNumber}/loan-basic-data")
     public ResponseEntity loanBasicData() {
-        loanBasicDataToggle = !loanBasicDataToggle;
+//        loanBasicDataToggle = !loanBasicDataToggle;
         if (loanBasicDataToggle) {
             LoanBasicDataResponse loanBasicData = new LoanBasicDataResponse(BigDecimal.TEN, BigDecimal.TEN, BigDecimal.TEN);
             return this.esbMockService.convertObjectToResponseEntity(loanBasicData);
         } else {
             return this.esbMockService.getErrorResponse("UGE0029", "Ο Λογαριασμος ειναι ακυρωμενος η ανενεργος!!!");
         }
+    }
 
+    @GetMapping("loans/{loanAccountNumber}/loan-basic-data-totals")
+    public ResponseEntity loanBasicDataTotals() {
+        return this.loanBasicData();
     }
 
     @PostMapping("loans/{loanAccountNumber}/collect-total-delay-bill")
@@ -317,8 +326,23 @@ public class LoansController {
         return this.esbMockService.getSuccessResponse();
     }
 
-    @PostMapping("loans/{loanAccountNumber}/dynamic-installments")
-    public ResponseEntity<?> insertDynamicInstallments() {
+    @PostMapping("loans/{loanAccountNumber}/reschedule")
+    public ResponseEntity<?> transferLoanCommitment() {
+        return this.esbMockService.getSuccessResponse();
+    }
+
+    @DeleteMapping("loans/{loanAccountNumber}/reschedule")
+    public ResponseEntity<?> transferLoanRelease() {
+        return this.esbMockService.getSuccessResponse();
+    }
+
+    @PostMapping("loans/{loanAccountNumber}/dissociate")
+    public ResponseEntity<?> openLoanDissociate() {
+        return this.esbMockService.getSuccessResponse();
+    }
+
+    @PostMapping("loans/{loanAccountNumber}/simulation")
+    public ResponseEntity<?> openLoanSimulation() {
         return this.esbMockService.getSuccessResponse();
     }
 

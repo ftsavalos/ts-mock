@@ -119,6 +119,7 @@ public class ProcessOutputServiceHelper {
         historyRequestMappings.put("loanAccountFlow", "loanaccount");
         historyRequestMappings.put("loanAccountAutoMotoFlow", "loanaccountautomoto");
         historyRequestMappings.put("loanAccountCLRemedialFlow", "loanaccountclremedial");
+        historyRequestMappings.put("loanAccountCLFlow", "loanaccountcl");
         historyRequestMappings.put("clAmortizedLoanUpdatedStatusCollectionFlow", "cl-amortizedloanpermanentdelaycollection");
         historyRequestMappings.put("clAmortizedLoanUpdatedStatusTTECollectionFlow", "cl-amortizedloanupdatedstatus-tte-collection");
         historyRequestMappings.put("clAmortizedLoanPermanentDelayCollectionFlow", "cl-amortizedloanpermanentdelaycollection");
