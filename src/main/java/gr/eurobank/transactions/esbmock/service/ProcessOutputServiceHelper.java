@@ -103,7 +103,7 @@ public class ProcessOutputServiceHelper {
         try {
             historyResponse =  restTemplate.exchange(stateMachineHistoryUrl, HttpMethod.GET, null, new ParameterizedTypeReference<String>() {}, historyRequestMappings.get(flow), originator, requestId);
         } catch (RestClientException e) {
-            String errorMessage = MessageFormat.format("The cause might be the absence of the key-value pair in historyRequestMappings representing the flow: {0}", flow);
+            String errorMessage = MessageFormat.format("The cause might be the absence of the key-value pair in historyRequestMappings representing the flow: {0}, or the combination of flow: {0}, originator: {1}, requestId: {2}, does not much any history data... ", flow, originator, requestId);
             throw new RestClientException(errorMessage);
         }
 
@@ -126,5 +126,10 @@ public class ProcessOutputServiceHelper {
         historyRequestMappings.put("clAmortizedLoanInDeletionCollectionFlow", "cl-amortizedloanindeletioncollection");
         historyRequestMappings.put("lowStartDenouncedFlow", "lowstartdenounced");
         historyRequestMappings.put("lowStartNonDenouncedFlow", "lowstartnondenounced");
+        historyRequestMappings.put("superOverdraftRepaymentFLow", "superoverdraft-repayment");
+        historyRequestMappings.put("openNewOpenLineFlow", "open-newopenline");
+        historyRequestMappings.put("massiveOpenNewOpenLineFlow", "massive-open-newopenline");
+        historyRequestMappings.put("contactlessStickerFlow", "contactless-sticker");
+        historyRequestMappings.put("makeContactlessCardFlow", "make-contactless-card");
     }
 }

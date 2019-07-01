@@ -28,7 +28,7 @@ public class AccountsController {
 
     @GetMapping("/accounts/{accountNumber}/steps")
     public ResponseEntity accoutnOpeningSteps() {
-        OpenAccountStepsResponse data = new OpenAccountStepsResponse("NNNNNNNNNNNNNNNNN", "96", "EUROHOME BALLOON 5 ΧΡ. ΣΤΑΘΕΡΟ", "3954", "001002003004040041005042043007008034044082009010013", "P", "ΔΑΝΕΙΑ", "YYYYYYYYYYYYYYYYY");
+        OpenAccountStepsResponse data = new OpenAccountStepsResponse("NNNNNNNNNNNNNNNNNN", "96", "EUROHOME BALLOON 5 ΧΡ. ΣΤΑΘΕΡΟ", "3954", "001002003004040041005042043007008034044082084009010013", "P", "ΔΑΝΕΙΑ", "YYYYYYYYYYYYYYYYYY");
         return this.esbMockService.convertObjectToResponseEntity(data);
     }
 
@@ -84,4 +84,15 @@ public class AccountsController {
     public ResponseEntity accountCancellation() {
         return this.esbMockService.getSuccessResponse();
     }
+
+    @PostMapping("/accounts/{accountNumber}/attorney-details")
+    public ResponseEntity setAttorneyDetails() {
+        return this.esbMockService.getSuccessResponse();
+    }
+
+    @PostMapping("accounts/{loanAccountNumber}/block")
+    public ResponseEntity<?> blockAccount() {
+        return this.esbMockService.getSuccessResponse();
+    }
+
 }

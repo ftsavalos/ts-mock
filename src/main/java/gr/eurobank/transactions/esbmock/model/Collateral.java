@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 
 @Data
@@ -22,4 +23,18 @@ public class Collateral implements Serializable {
     private String cardata;
     private String description;
     private String loanAccount;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Collateral that = (Collateral) o;
+        return Objects.equals(collateralCode, that.collateralCode) &&
+                Objects.equals(sequenceNumber, that.sequenceNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(collateralCode, sequenceNumber);
+    }
 }

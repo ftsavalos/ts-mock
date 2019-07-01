@@ -17,6 +17,7 @@ public class History extends BaseEntity {
     private String inputOriginator;
     @Column(columnDefinition = "TEXT")
     private String processOutput;
+    @Column(columnDefinition = "TEXT")
     private String error;
     private String errorOnTransaction;
 

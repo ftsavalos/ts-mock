@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.module.jsonSchema.JsonSchema;
 import com.fasterxml.jackson.module.jsonSchema.JsonSchemaGenerator;
+import com.jayway.jsonpath.JsonPath;
 import gr.eurobank.transactions.esbmock.model.loan.dto.AccountBalanceResponse;
 import gr.eurobank.transactions.esbmock.model.loan.dto.LoanAccountPropertiesResponse;
 import gr.eurobank.transactions.esbmock.model.loan.dto.LoanAccountResponse;
@@ -45,6 +46,20 @@ public class JsonSchemaController {
     @PostMapping(value = "schemaFromJson", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<String> getSchemaFromJsonEndpoint(@RequestBody String json) throws IOException {
         return ResponseEntity.ok(this.getSchemaFromJsonRuntime(json));
+    }
+
+    @PostMapping(value = "pojoFromSchema", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<String> getPojoFromSchema(@RequestBody String schema) {
+
+        String str = "{ \"object\": " + schema + "}";
+
+        StringBuilder stringBuilder = new StringBuilder("public class ");
+        String className = JsonPath.read(schema, "$.*~");
+
+        stringBuilder.append(className);
+        stringBuilder.append("{ }");
+
+        return ResponseEntity.ok(stringBuilder.toString());
     }
 
     private String getJsonSchemaDeprecated(Class clazz) throws IOException {

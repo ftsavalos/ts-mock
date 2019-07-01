@@ -22,9 +22,9 @@ import static gr.eurobank.transactions.esbmock.controller.ControllerConstants.CO
 @Slf4j
 public class LoansController {
 
-    private final EsbMockService esbMockService;
-
+    static int x = 0;
     private static boolean loanBasicDataToggle;
+    private final EsbMockService esbMockService;
 
     public LoansController(EsbMockService esbMockService) {
         this.esbMockService = esbMockService;
@@ -78,6 +78,11 @@ public class LoansController {
         return this.esbMockService.getSuccessResponse();
     }
 
+    @GetMapping("/loans/{loanAccountNumber}/flexi")
+    public ResponseEntity getFlexiData() {
+        return this.esbMockService.getSuccessResponse();
+    }
+
     @GetMapping("/loans/{loanAccountNumber}/source-code-info")
     public ResponseEntity getSourceCodeInfo() {
         return this.esbMockService.getResponseEntityByClass(InsertSourceCodeInfoResponse.class);
@@ -113,19 +118,26 @@ public class LoansController {
                         this.esbMockService.getObject(Collateral.class)
                 )
         );
+        listOfCollateralsResponse.getListOfCollaterals().get(0).setCollateralCode(COLLATERAL_CODE_INSURANCE_GUARANTEE);
+        listOfCollateralsResponse.getListOfCollaterals().get(0).setSequenceNumber(1);
 
-        listOfCollateralsResponse.getListOfCollaterals().forEach(a -> log.info("{}", a));
-        listOfCollateralsResponse.getListOfCollaterals().forEach(col -> {
-            col.setCollateralCode(COLLATERAL_CODE_INSURANCE_GUARANTEE);
-            col.setSequenceNumber(COLLATERAL_INSURANCE_SEQUENCE_NUMBER);
-        });
+        listOfCollateralsResponse.getListOfCollaterals().get(1).setCollateralCode("204");
+        listOfCollateralsResponse.getListOfCollaterals().get(1).setSequenceNumber(1);
+
+        listOfCollateralsResponse.getListOfCollaterals().get(2).setCollateralCode("205");
+        listOfCollateralsResponse.getListOfCollaterals().get(2).setSequenceNumber(1);
 
         return this.esbMockService.convertObjectToResponseEntity(listOfCollateralsResponse);
     }
 
     @PostMapping("loans/{loanAccountNumber}/collaterals")
     public ResponseEntity insertLoanCollaterals() {
+//        if (x % 2 == 0) {
+//            x++;
         return this.esbMockService.getSuccessResponse();
+//        } else {
+//            return ResponseEntity.badRequest().build();
+//        }
     }
 
     @PostMapping("/loans/{loanAccountNumber}/approval")
@@ -274,6 +286,7 @@ public class LoansController {
         return this.esbMockService.getSuccessResponse();
     }
 
+
     @PostMapping("loans/{loanAccountNumber}/early-loan-repayment")
     public ResponseEntity earlyLoanRepayment() {
         return this.esbMockService.getSuccessResponse();
@@ -326,6 +339,11 @@ public class LoansController {
         return this.esbMockService.getSuccessResponse();
     }
 
+    @PostMapping("loans/{loanAccountNumber}/dynamic-installments")
+    public ResponseEntity insertDynamicInstallments() {
+        return this.esbMockService.getSuccessResponse();
+    }
+
     @PostMapping("loans/{loanAccountNumber}/reschedule")
     public ResponseEntity<?> transferLoanCommitment() {
         return this.esbMockService.getSuccessResponse();
@@ -344,6 +362,31 @@ public class LoansController {
     @PostMapping("loans/{loanAccountNumber}/simulation")
     public ResponseEntity<?> openLoanSimulation() {
         return this.esbMockService.getSuccessResponse();
+    }
+
+    @PostMapping("loans/{loanAccountNumber}/open-loan-account")
+    public ResponseEntity<?> createAltamiraOpenLoanAccount() {
+        return this.esbMockService.getSuccessResponse();
+    }
+
+    @PostMapping("loans/{loanAccountNumber}/open-loan-policy")
+    public ResponseEntity<?> setAltamiraOpenLoanInvoicingPolicy() {
+        return this.esbMockService.getSuccessResponse();
+    }
+
+    @PostMapping("loans/{loanAccountNumber}/evaluate")
+    public ResponseEntity<?> evaluateAltamiraOpenLoan() {
+        return this.esbMockService.getSuccessResponse();
+    }
+
+    @PostMapping("loans/{loanAccountNumber}/payroll-connect")
+    public ResponseEntity<?> connectPayroll() {
+        if (x % 2 == 0) {
+            x++;
+            return ResponseEntity.badRequest().build();
+        } else {
+            return this.esbMockService.getSuccessResponse();
+        }
     }
 
 }
