@@ -281,6 +281,16 @@ public class LoansController {
         return this.loanBasicData();
     }
 
+    @GetMapping("loans/{loanAccountNumber}/flexi")
+    public String getFlexi() {
+        return "{\"installmentAmount\":200.00}";
+    }
+
+    @PostMapping("loans/{loanAccountNumber}/collect-loan-bill")
+    public ResponseEntity collectLoanBill() {
+        return this.esbMockService.getSuccessResponse();
+    }
+
     @PostMapping("loans/{loanAccountNumber}/collect-total-delay-bill")
     public ResponseEntity collectTotalDelayBill() {
         return this.esbMockService.getSuccessResponse();
