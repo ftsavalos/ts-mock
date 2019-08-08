@@ -28,7 +28,7 @@ public class EsbMockApplication {
         return new RestTemplate();
     }
 
-    @Bean
+//    @Bean
     public String esbSwaggerApiDocJson(RestTemplate restTemplate) {
         return restTemplate.exchange(MessageFormat.format(esbSwaggerEndpoint, "api-doc"), HttpMethod.GET, null, new ParameterizedTypeReference<String>() {}, (Object) null).getBody();
     }
