@@ -78,11 +78,6 @@ public class LoansController {
         return this.esbMockService.getSuccessResponse();
     }
 
-    @GetMapping("/loans/{loanAccountNumber}/flexi")
-    public ResponseEntity getFlexiData() {
-        return this.esbMockService.getSuccessResponse();
-    }
-
     @GetMapping("/loans/{loanAccountNumber}/source-code-info")
     public ResponseEntity getSourceCodeInfo() {
         return this.esbMockService.getResponseEntityByClass(InsertSourceCodeInfoResponse.class);
@@ -121,10 +116,10 @@ public class LoansController {
         listOfCollateralsResponse.getListOfCollaterals().get(0).setCollateralCode(COLLATERAL_CODE_INSURANCE_GUARANTEE);
         listOfCollateralsResponse.getListOfCollaterals().get(0).setSequenceNumber(1);
 
-        listOfCollateralsResponse.getListOfCollaterals().get(1).setCollateralCode("204");
+        listOfCollateralsResponse.getListOfCollaterals().get(1).setCollateralCode("401");
         listOfCollateralsResponse.getListOfCollaterals().get(1).setSequenceNumber(1);
 
-        listOfCollateralsResponse.getListOfCollaterals().get(2).setCollateralCode("205");
+        listOfCollateralsResponse.getListOfCollaterals().get(2).setCollateralCode("001");
         listOfCollateralsResponse.getListOfCollaterals().get(2).setSequenceNumber(1);
 
         return this.esbMockService.convertObjectToResponseEntity(listOfCollateralsResponse);

@@ -126,10 +126,12 @@ public class ProcessOutputServiceHelper {
         historyRequestMappings.put("clAmortizedLoanInDeletionCollectionFlow", "cl-amortizedloanindeletioncollection");
         historyRequestMappings.put("lowStartDenouncedFlow", "lowstartdenounced");
         historyRequestMappings.put("lowStartNonDenouncedFlow", "lowstartnondenounced");
-        historyRequestMappings.put("superOverdraftRepaymentFLow", "superoverdraft-repayment");
+        historyRequestMappings.put("clRemedialRepaymentsFlow", "cl-remedial-repayment");
+        historyRequestMappings.put("openSuperOverdraftAccountFlow", "superoverdraft-open-account");
         historyRequestMappings.put("openNewOpenLineFlow", "open-newopenline");
         historyRequestMappings.put("massiveOpenNewOpenLineFlow", "massive-open-newopenline");
         historyRequestMappings.put("contactlessStickerFlow", "contactless-sticker");
         historyRequestMappings.put("makeContactlessCardFlow", "make-contactless-card");
+        historyRequestMappings.put("dpoClRepaymentsFlow", "dpo-cl-repayments");
     }
 }
