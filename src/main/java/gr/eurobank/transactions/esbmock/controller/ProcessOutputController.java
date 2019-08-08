@@ -40,7 +40,7 @@ public class ProcessOutputController {
             log.info("Nothing to worry about...! ftsavalos is using a redundant Active MQ.");
         }
 
-        processOutputService.saveHistory(requestBody);
+//        processOutputService.saveHistory(requestBody);
 
         return ResponseEntity.ok(requestBody);
     }
