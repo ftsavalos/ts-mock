@@ -1,5 +1,22 @@
 /target/
 !.mvn/wrapper/maven-wrapper.jar
+src/resources
+.mvn
+docker/esbmock/esb-mock.jar
+logstash.conf
+spring-shell.log
+src/main/resources/Fotis_Tsavalos.png
+src/main/resources/auto-moto-loan-template.json
+src/main/resources/banners.txt
+src/main/resources/dummy/
+src/main/resources/json-schema-tool/
+src/main/resources/local-application.properties
+src/main/resources/log4j2-spring.xml
+src/main/resources/new/
+src/main/resources/old/
+src/main/resources/template-deposit.json
+src/main/resources/template-loan.json
+
 
 ### STS ###
 .apt_generated
