@@ -2,6 +2,8 @@ package gr.eurobank.transactions.esbmock.controller;
 
 import com.google.common.collect.Lists;
 import gr.eurobank.transactions.esbmock.model.Collateral;
+import gr.eurobank.transactions.esbmock.model.Property;
+import gr.eurobank.transactions.esbmock.model.SDOProperty;
 import gr.eurobank.transactions.esbmock.model.UnpaidInstallment;
 import gr.eurobank.transactions.esbmock.model.loan.dto.*;
 import gr.eurobank.transactions.esbmock.service.EsbMockService;
@@ -50,7 +52,20 @@ public class LoansController {
 
     @GetMapping("/loans/{loanAccountNumber}/properties")
     public ResponseEntity getLoanAccountProperties() {
-        return this.esbMockService.getResponseEntityByClass(LoanAccountPropertiesResponse.class);
+        Property property1 = esbMockService.getObject(Property.class);
+        Property property2 = esbMockService.getObject(Property.class);
+        List<Property> properties = Arrays.asList(property1, property2);
+        LoanAccountPropertiesResponse<Property> response = new LoanAccountPropertiesResponse<Property>(properties);
+        return esbMockService.convertObjectToResponseEntity(response);
+    }
+
+    @GetMapping("/loans/{loanAccountNumber}/sdoProperties")
+    public ResponseEntity getLoanAccountSdoProperties() {
+        SDOProperty property1 = esbMockService.getObject(SDOProperty.class);
+        SDOProperty property2 = esbMockService.getObject(SDOProperty.class);
+        List<SDOProperty> properties = Arrays.asList(property1, property2);
+        LoanAccountPropertiesResponse<SDOProperty> response = new LoanAccountPropertiesResponse<SDOProperty>(properties);
+        return esbMockService.convertObjectToResponseEntity(response);
     }
 
     @PostMapping("/loans/{loanAccountNumber}/properties")
