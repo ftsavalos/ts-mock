@@ -8,8 +8,8 @@ import java.util.List;
 
 @AllArgsConstructor
 @Data
-public class LoanAccountPropertiesResponse<P extends Property> {
+public class LoanAccountPropertiesResponse {
 
-    private List<P> listOfProperties;
+    private List<Property> listOfProperties;
 
 }

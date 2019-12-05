@@ -1,5 +1,6 @@
 package gr.eurobank.transactions.esbmock;
 
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -13,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import java.text.MessageFormat;
 
 @Slf4j
+//@EnableAdminServer
 @SpringBootApplication
 public class EsbMockApplication {
 
@@ -28,7 +30,7 @@ public class EsbMockApplication {
         return new RestTemplate();
     }
 
-//    @Bean
+    @Bean
     public String esbSwaggerApiDocJson(RestTemplate restTemplate) {
         return restTemplate.exchange(MessageFormat.format(esbSwaggerEndpoint, "api-doc"), HttpMethod.GET, null, new ParameterizedTypeReference<String>() {}, (Object) null).getBody();
     }

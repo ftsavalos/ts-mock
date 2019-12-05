@@ -23,6 +23,7 @@ public class Collateral implements Serializable {
     private String cardata;
     private String description;
     private String loanAccount;
+    private String collateralId;
 
     @Override
     public boolean equals(Object o) {

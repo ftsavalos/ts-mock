@@ -3,11 +3,13 @@ package gr.eurobank.transactions.esbmock;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class Main {
 
     public static void main(String[] args) {
+
 
         MyFunction myFunction = function -> function.apply(5);
         Integer method = myFunction.method(x -> x + 6);
@@ -46,4 +48,10 @@ interface MyFunction {
 
 interface MyFunctionalInterface {
     Function<Integer, Integer> method(Integer x);
+}
+
+interface AbstractionKing<T> {
+
+    <R> Consumer<R> method(Function<T, R> con);
+
 }

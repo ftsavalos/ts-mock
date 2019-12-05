@@ -14,4 +14,6 @@ public class Property {
     private Integer burdenSequenceNumber;
     private String clientCollaborator;
     private BigDecimal appraisalCost;
+
+    private String deCode;
 }

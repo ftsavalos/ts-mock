@@ -3,7 +3,6 @@ package gr.eurobank.transactions.esbmock.controller;
 import com.google.common.collect.Lists;
 import gr.eurobank.transactions.esbmock.model.Collateral;
 import gr.eurobank.transactions.esbmock.model.Property;
-import gr.eurobank.transactions.esbmock.model.SDOProperty;
 import gr.eurobank.transactions.esbmock.model.UnpaidInstallment;
 import gr.eurobank.transactions.esbmock.model.loan.dto.*;
 import gr.eurobank.transactions.esbmock.service.EsbMockService;
@@ -16,7 +15,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
-import static gr.eurobank.transactions.esbmock.controller.ControllerConstants.COLLATERAL_CODE_INSURANCE_GUARANTEE;
 import static gr.eurobank.transactions.esbmock.controller.ControllerConstants.COLLATERAL_INSURANCE_SEQUENCE_NUMBER;
 
 @RestController
@@ -52,20 +50,42 @@ public class LoansController {
 
     @GetMapping("/loans/{loanAccountNumber}/properties")
     public ResponseEntity getLoanAccountProperties() {
+
         Property property1 = esbMockService.getObject(Property.class);
-        Property property2 = esbMockService.getObject(Property.class);
-        List<Property> properties = Arrays.asList(property1, property2);
-        LoanAccountPropertiesResponse<Property> response = new LoanAccountPropertiesResponse<Property>(properties);
+        property1.setDeCode(null);
+        property1.setGuaranteeCode("202");
+        property1.setSequenceNumber(1);
+        property1.setRealEstateCode(29197);
+
+        List<Property> properties = Arrays.asList(property1);
+        LoanAccountPropertiesResponse response = new LoanAccountPropertiesResponse(properties);
         return esbMockService.convertObjectToResponseEntity(response);
     }
 
-    @GetMapping("/loans/{loanAccountNumber}/sdoProperties")
+    @GetMapping("/sdo/loans/{loanAccountNumber}/properties")
     public ResponseEntity getLoanAccountSdoProperties() {
-        SDOProperty property1 = esbMockService.getObject(SDOProperty.class);
-        SDOProperty property2 = esbMockService.getObject(SDOProperty.class);
-        List<SDOProperty> properties = Arrays.asList(property1, property2);
-        LoanAccountPropertiesResponse<SDOProperty> response = new LoanAccountPropertiesResponse<SDOProperty>(properties);
+
+
+        Property property1 = esbMockService.getObject(Property.class);
+        property1.setDeCode("405224");
+        property1.setGuaranteeCode("204");
+        property1.setSequenceNumber(1);
+        property1.setRealEstateCode(29197);
+
+        List<Property> properties = Arrays.asList(property1);
+        LoanAccountPropertiesResponse response = new LoanAccountPropertiesResponse(properties);
         return esbMockService.convertObjectToResponseEntity(response);
+
+//        Property property1 = esbMockService.getObject(Property.class);
+//        Property property2 = esbMockService.getObject(Property.class);
+//        List<Property> properties = Arrays.asList(property1, property2);
+//        LoanAccountPropertiesResponse response = new LoanAccountPropertiesResponse(properties);
+//        return esbMockService.convertObjectToResponseEntity(response);
+    }
+
+    @DeleteMapping("/sdo/properties")
+    public ResponseEntity deleteLoanAccountSDOProperties() {
+        return this.esbMockService.getSuccessResponse();
     }
 
     @PostMapping("/loans/{loanAccountNumber}/properties")
@@ -85,6 +105,7 @@ public class LoansController {
 
     @PostMapping("/loans/{loanAccountNumber}/agreement")
     public ResponseEntity finalizeLoanAgrevtement() {
+//        return ResponseEntity.badRequest().build();
         return this.esbMockService.getSuccessResponse();
     }
 
@@ -108,7 +129,8 @@ public class LoansController {
     public ResponseEntity getLoanAccountInsurances() {
         RetrieveInsurancesResponse insurancesResponse = this.esbMockService.getObject(RetrieveInsurancesResponse.class);
         insurancesResponse.getListOfInsurances().forEach(ins -> {
-            ins.setGuaranteeCode(COLLATERAL_CODE_INSURANCE_GUARANTEE);
+//            ins.setGuaranteeCode(COLLATERAL_CODE_INSURANCE_GUARANTEE);
+            ins.setGuaranteeCode("301");
             ins.setSequenceNumber(COLLATERAL_INSURANCE_SEQUENCE_NUMBER);
         });
         return this.esbMockService.convertObjectToResponseEntity(insurancesResponse);
@@ -121,24 +143,28 @@ public class LoansController {
 
     @GetMapping("loans/{loanAccountNumber}/collaterals")
     public ResponseEntity getLoanAccountCollaterals() {
+
         ListOfCollateralsResponse listOfCollateralsResponse = new ListOfCollateralsResponse(
                 Arrays.asList(
-                        this.esbMockService.getObject(Collateral.class),
-                        this.esbMockService.getObject(Collateral.class),
-                        this.esbMockService.getObject(Collateral.class)
-                )
-        );
-        listOfCollateralsResponse.getListOfCollaterals().get(0).setCollateralCode(COLLATERAL_CODE_INSURANCE_GUARANTEE);
-        listOfCollateralsResponse.getListOfCollaterals().get(0).setSequenceNumber(1);
-
-        listOfCollateralsResponse.getListOfCollaterals().get(1).setCollateralCode("401");
-        listOfCollateralsResponse.getListOfCollaterals().get(1).setSequenceNumber(1);
-
-        listOfCollateralsResponse.getListOfCollaterals().get(2).setCollateralCode("001");
-        listOfCollateralsResponse.getListOfCollaterals().get(2).setSequenceNumber(1);
+                        new Collateral(null, "000", "202", null, null, null, 1, null, null, null, null, "alt_1")
+//                        new Collateral(null, "000", "301", null, null, null, 1, null, null, null, null, "alt_1"),
+//                        new Collateral(null, "000", "201", null, null, null, 1, null, null, null, null, "alt_1")
+                ));
 
         return this.esbMockService.convertObjectToResponseEntity(listOfCollateralsResponse);
     }
+
+    @GetMapping("sdo/loans/{loanAccountNumber}/collaterals")
+    public ResponseEntity getLoanAccountCollateralsSDO() {
+
+        ListOfCollateralsResponse listOfCollateralsResponse = new ListOfCollateralsResponse(
+                Arrays.asList(
+                        new Collateral(null, null, "204", null, null, null, 7, null, null, null, null, "sdo_1")
+                ));
+
+        return this.esbMockService.convertObjectToResponseEntity(listOfCollateralsResponse);
+    }
+
 
     @PostMapping("loans/{loanAccountNumber}/collaterals")
     public ResponseEntity insertLoanCollaterals() {
@@ -409,4 +435,13 @@ public class LoansController {
         }
     }
 
+    @PostMapping("loans/{loanAccountNumber}/super-overdraft-account")
+    public ResponseEntity<?> createAltamiraSuperOverdraftAccount() {
+        return this.esbMockService.getResponseEntityByClass(SuperOverDraftCreateAccountResponse.class);
+    }
+
+    @PostMapping("loans/{loanAccountNumber}/evaluate-sod")
+    public ResponseEntity<?> evaluateSOD() {
+        return this.esbMockService.getSuccessResponse();
+    }
 }
